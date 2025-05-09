@@ -73,6 +73,9 @@ def extract(a, t, x_shape):
     broadcastable with x_shape."""
     bs, = t.shape
     assert x_shape[0] == bs
+    # 打印时间步索引范围
+    print(f"Time steps (min, max): {t.min().item()}, {t.max().item()}")
+    print(f"Array size: {len(a)}")
     out = torch.gather(torch.tensor(a, dtype=torch.float, device=t.device), 0, t.long())
     assert out.shape == (bs,)
     out = out.reshape((bs,) + (1,) * (len(x_shape) - 1))
